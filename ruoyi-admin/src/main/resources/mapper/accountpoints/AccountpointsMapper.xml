@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.accountpoints.mapper.AccountpointsMapper">
+    
+    <resultMap type="Accountpoints" id="AccountpointsResult">
+        <result property="id"    column="id"    />
+        <result property="playerId"    column="playerId"    />
+        <result property="advertCount1"    column="advertCount1"    />
+        <result property="advertCount2"    column="advertCount2"    />
+        <result property="noney"    column="noney"    />
+        <result property="sumpoints"    column="sumpoints"    />
+        <result property="name"    column="name"    />
+        <result property="password"    column="password"    />
+        <result property="utime"    column="utime"    />
+        <result property="isBuy"    column="is_buy"    />
+        <result property="by1"    column="by1"    />
+        <result property="by2"    column="by2"    />
+        <result property="by3"    column="by3"    />
+    </resultMap>
+
+    <sql id="selectAccountpointsVo">
+        select id, playerId, advertCount1, advertCount2, noney, sumpoints, name, password, utime, is_buy, by1, by2, by3 from accountpoints
+    </sql>
+
+    <select id="selectAccountpointsList" parameterType="Accountpoints" resultMap="AccountpointsResult">
+        <include refid="selectAccountpointsVo"/>
+        <where>  
+            <if test="playerId != null  and playerId != ''"> and playerId = #{playerId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAccountpointsById" parameterType="Long" resultMap="AccountpointsResult">
+        <include refid="selectAccountpointsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAccountpoints" parameterType="Accountpoints">
+        insert into accountpoints
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="playerId != null">playerId,</if>
+            <if test="advertCount1 != null">advertCount1,</if>
+            <if test="advertCount2 != null">advertCount2,</if>
+            <if test="noney != null">noney,</if>
+            <if test="sumpoints != null">sumpoints,</if>
+            <if test="name != null">name,</if>
+            <if test="password != null">password,</if>
+            <if test="utime != null">utime,</if>
+            <if test="isBuy != null">is_buy,</if>
+            <if test="by1 != null">by1,</if>
+            <if test="by2 != null">by2,</if>
+            <if test="by3 != null">by3,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="playerId != null">#{playerId},</if>
+            <if test="advertCount1 != null">#{advertCount1},</if>
+            <if test="advertCount2 != null">#{advertCount2},</if>
+            <if test="noney != null">#{noney},</if>
+            <if test="sumpoints != null">#{sumpoints},</if>
+            <if test="name != null">#{name},</if>
+            <if test="password != null">#{password},</if>
+            <if test="utime != null">#{utime},</if>
+            <if test="isBuy != null">#{isBuy},</if>
+            <if test="by1 != null">#{by1},</if>
+            <if test="by2 != null">#{by2},</if>
+            <if test="by3 != null">#{by3},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAccountpoints" parameterType="Accountpoints">
+        update accountpoints
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="playerId != null">playerId = #{playerId},</if>
+            <if test="advertCount1 != null">advertCount1 = #{advertCount1},</if>
+            <if test="advertCount2 != null">advertCount2 = #{advertCount2},</if>
+            <if test="noney != null">noney = #{noney},</if>
+            <if test="sumpoints != null">sumpoints = #{sumpoints},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="utime != null">utime = #{utime},</if>
+            <if test="isBuy != null">is_buy = #{isBuy},</if>
+            <if test="by1 != null">by1 = #{by1},</if>
+            <if test="by2 != null">by2 = #{by2},</if>
+            <if test="by3 != null">by3 = #{by3},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAccountpointsById" parameterType="Long">
+        delete from accountpoints where id = #{id}
+    </delete>
+
+    <delete id="deleteAccountpointsByIds" parameterType="String">
+        delete from accountpoints where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
